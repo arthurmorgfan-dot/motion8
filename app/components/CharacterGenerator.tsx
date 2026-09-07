@@ -458,7 +458,7 @@ export default function CharacterGenerator() {
               Main Workspace
               ================================================== */}
 
-          <div className="min-w-0 flex-1">
+          <div className="contents xl:block">
 
             {/* ==================================================
                 Character Generator Header
@@ -590,7 +590,7 @@ export default function CharacterGenerator() {
                 Workspace Showcase / Generated Result
                 ================================================== */}
 
-            <div className="mt-8">
+            <div className="order-2 mt-8 xl:order-none">
 
               {generatedFrames ? (
 

@@ -467,22 +467,19 @@ export default function BackgroundGenerator() {
                     ================================================== */}
 
                 <button
-                  type="button"
-                  onClick={() => {
-                    alert(
-                      "🔥 MOTION8 REACT BUTTON WORKS",
-                    );
-                  }}
-                  className="flex min-h-[150px] items-center justify-center gap-3 rounded-xl bg-[#4d8fff] px-8 text-base font-semibold text-white lg:w-[185px]"
-                >
-                  <span className="text-xl">
-                    ✦
-                  </span>
+  type="button"
+  onClick={handleGenerate}
+  disabled={generating || !prompt.trim()}
+  className="flex min-h-[150px] items-center justify-center gap-3 rounded-xl bg-[#4d8fff] px-8 text-base font-semibold text-white transition hover:bg-[#609cff] disabled:cursor-not-allowed disabled:opacity-40 lg:w-[185px]"
+>
+  <span className="text-xl">
+    {generating ? "◌" : "✦"}
+  </span>
 
-                  <span>
-                    TEST GENERATE
-                  </span>
-                </button>
+  <span>
+    {generating ? "Creating..." : "Generate"}
+  </span>
+</button>
 
               </div>
 
