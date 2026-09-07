@@ -77,19 +77,3 @@ input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-
-/* ============================================================
-   MOTION8 — Mobile Touch Diagnostic
-   ------------------------------------------------------------
-   Temporarily forces interactive elements to receive pointer
-   and touch input. This is a diagnostic rule only.
-   ============================================================ */
-
-button,
-a,
-input,
-textarea,
-select {
-  pointer-events: auto !important;
-  touch-action: manipulation;
-}

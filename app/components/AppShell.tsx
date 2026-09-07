@@ -10,7 +10,6 @@
 // - Renders the desktop sidebar navigation.
 // - Renders the mobile top navigation.
 // - Provides the mobile navigation drawer.
-// - Provides a temporary non-React mobile interaction test.
 // - Provides the main application workspace.
 //
 // DOES NOT CONTROL:
@@ -149,16 +148,16 @@ export default function AppShell({ children }: AppShellProps) {
           </p>
         </div>
 
-        {/* ==================================================
-            TEMPORARY NON-REACT TEST
-            ================================================== */}
+        {/* Mobile Menu Button */}
 
-        <a
-          href="#motion8-mobile-test"
-          className="flex h-12 min-w-[72px] items-center justify-center rounded-lg border-2 border-white bg-white px-4 text-sm font-bold text-black"
+        <button
+          type="button"
+          aria-label="Open navigation"
+          onClick={() => setMobileMenuOpen(true)}
+          className="flex h-11 w-11 items-center justify-center rounded-lg border border-[#34445f] bg-[#0e1623] text-xl text-[#dce7ff]"
         >
-          TEST
-        </a>
+          ☰
+        </button>
       </header>
 
       {/* ======================================================
