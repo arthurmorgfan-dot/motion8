@@ -410,7 +410,7 @@ export default function BackgroundGenerator() {
               Main Workspace
               ================================================== */}
 
-          <div className="min-w-0 flex-1">
+          <div className="contents xl:block">
 
             {/* ==================================================
                 Background Generator Header
