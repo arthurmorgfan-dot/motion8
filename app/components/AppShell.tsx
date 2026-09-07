@@ -11,6 +11,9 @@
 // - Renders the mobile top navigation.
 // - Provides the mobile navigation drawer.
 // - Provides the main application workspace.
+// - Handles navigation between application sections.
+// - Highlights the currently active application section.
+// - Provides navigation back to the MOTION8 home page.
 //
 // DOES NOT CONTROL:
 //
@@ -27,7 +30,9 @@
 
 "use client";
 
+import Link from "next/link";
 import { ReactNode, useState } from "react";
+import { usePathname } from "next/navigation";
 
 type AppShellProps = {
   children: ReactNode;
@@ -35,79 +40,129 @@ type AppShellProps = {
 
 const navigation = [
   {
+    name: "Home",
+    icon: "⌂",
+    href: "/",
+  },
+
+  {
     name: "Generate",
     icon: "✦",
+    href: "/generate",
   },
+
   {
     name: "Animate",
     icon: "◇",
+    href: "/animate",
   },
+
   {
     name: "Projects",
     icon: "□",
+    href: "#",
   },
+
   {
     name: "Gallery",
     icon: "▧",
+    href: "#",
   },
+
   {
     name: "Settings",
     icon: "⚙",
+    href: "#",
   },
 ];
 
 export default function AppShell({ children }: AppShellProps) {
+  const pathname = usePathname();
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const isActive = (href: string) => {
+    if (href === "/") {
+      return pathname === "/";
+    }
+
+    return pathname.startsWith(href);
+  };
 
   return (
     <div className="min-h-screen bg-[#080d16] text-white">
+
       {/* ======================================================
           Desktop Sidebar
           ====================================================== */}
 
       <aside className="fixed inset-y-0 left-0 z-40 hidden w-[280px] border-r border-white/[0.06] bg-[#0b111c] lg:flex lg:flex-col">
+
         {/* Logo */}
 
         <div className="px-10 pt-8">
-          <div className="text-[30px] font-black tracking-[-0.04em]">
-            MOTION8
-          </div>
 
-          <p className="mt-1 text-[11px] tracking-[0.28em] text-[#71809c]">
-            IDEAS IN MOTION
-          </p>
+          <Link
+            href="/"
+            aria-label="MOTION8 Home"
+            className="group block w-fit"
+          >
+
+            <div className="text-[30px] font-black tracking-[-0.04em] transition group-hover:text-[#65a4ff]">
+              MOTION8
+            </div>
+
+            <p className="mt-1 text-[11px] tracking-[0.28em] text-[#71809c]">
+              IDEAS IN MOTION
+            </p>
+
+          </Link>
+
         </div>
 
         {/* Navigation */}
 
         <nav className="mt-12 px-4">
-          <div className="space-y-2">
-            {navigation.map((item, index) => (
-              <button
-                key={item.name}
-                type="button"
-                className={`group flex min-h-[52px] w-full items-center gap-4 rounded-lg px-6 py-3.5 text-left transition ${
-                  index === 0
-                    ? "bg-[#17366d] text-[#65a4ff] shadow-[inset_4px_0_0_#4d8fff]"
-                    : "text-[#8190ad] hover:bg-white/[0.03] hover:text-white"
-                }`}
-              >
-                <span className="flex w-5 justify-center text-xl leading-none">
-                  {item.icon}
-                </span>
 
-                <span className="text-[15px] font-medium">
-                  {item.name}
-                </span>
-              </button>
-            ))}
+          <div className="space-y-2">
+
+            {navigation.map((item) => {
+
+              const active = isActive(item.href);
+
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={`group flex min-h-[52px] w-full items-center gap-4 rounded-lg px-6 py-3.5 text-left transition ${
+                    active
+                      ? "bg-[#17366d] text-[#65a4ff] shadow-[inset_4px_0_0_#4d8fff]"
+                      : "text-[#8190ad] hover:bg-white/[0.03] hover:text-white"
+                  }`}
+                >
+
+                  <span className="flex w-5 justify-center text-xl leading-none">
+                    {item.icon}
+                  </span>
+
+                  <span className="text-[15px] font-medium">
+                    {item.name}
+                  </span>
+
+                </Link>
+              );
+            })}
+
           </div>
+
         </nav>
 
         {/* Sidebar Footer */}
 
         <div className="mt-auto px-4 pb-6">
+
           <div className="rounded-xl border border-white/[0.06] bg-[#0e1623] p-6">
+
             <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#8190ad]">
               Create
             </p>
@@ -129,8 +184,11 @@ export default function AppShell({ children }: AppShellProps) {
               <br />
               TOMORROW.
             </p>
+
           </div>
+
         </div>
+
       </aside>
 
       {/* ======================================================
@@ -138,7 +196,13 @@ export default function AppShell({ children }: AppShellProps) {
           ====================================================== */}
 
       <header className="relative z-40 flex h-20 items-center justify-between border-b border-white/[0.06] bg-[#0b111c] px-5 lg:hidden">
-        <div>
+
+        <Link
+          href="/"
+          aria-label="MOTION8 Home"
+          className="block"
+        >
+
           <div className="text-2xl font-black tracking-[-0.04em]">
             MOTION8
           </div>
@@ -146,7 +210,8 @@ export default function AppShell({ children }: AppShellProps) {
           <p className="text-[8px] tracking-[0.25em] text-[#71809c]">
             IDEAS IN MOTION
           </p>
-        </div>
+
+        </Link>
 
         {/* Mobile Menu Button */}
 
@@ -158,6 +223,7 @@ export default function AppShell({ children }: AppShellProps) {
         >
           ☰
         </button>
+
       </header>
 
       {/* ======================================================
@@ -165,7 +231,9 @@ export default function AppShell({ children }: AppShellProps) {
           ====================================================== */}
 
       {mobileMenuOpen && (
+
         <div className="fixed inset-0 z-[100] lg:hidden">
+
           {/* Backdrop */}
 
           <button
@@ -178,10 +246,17 @@ export default function AppShell({ children }: AppShellProps) {
           {/* Drawer */}
 
           <aside className="relative z-[101] flex h-full w-[min(84vw,340px)] flex-col border-r border-white/[0.08] bg-[#0b111c] shadow-[20px_0_60px_rgba(0,0,0,0.5)]">
+
             {/* Drawer Header */}
 
             <div className="flex items-center justify-between border-b border-white/[0.06] px-6 py-6">
-              <div>
+
+              <Link
+                href="/"
+                aria-label="MOTION8 Home"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+
                 <div className="text-2xl font-black tracking-[-0.04em]">
                   MOTION8
                 </div>
@@ -189,7 +264,8 @@ export default function AppShell({ children }: AppShellProps) {
                 <p className="mt-1 text-[8px] tracking-[0.25em] text-[#71809c]">
                   IDEAS IN MOTION
                 </p>
-              </div>
+
+              </Link>
 
               <button
                 type="button"
@@ -199,43 +275,57 @@ export default function AppShell({ children }: AppShellProps) {
               >
                 ×
               </button>
+
             </div>
 
             {/* Drawer Navigation */}
 
             <nav className="px-4 py-6">
+
               <p className="mb-3 px-3 text-[10px] font-medium uppercase tracking-[0.22em] text-[#59677f]">
                 Workspace
               </p>
 
               <div className="space-y-2">
-                {navigation.map((item, index) => (
-                  <button
-                    key={item.name}
-                    type="button"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={`flex min-h-[56px] w-full items-center gap-4 rounded-xl px-5 text-left ${
-                      index === 0
-                        ? "bg-[#17366d] text-[#65a4ff] shadow-[inset_4px_0_0_#4d8fff]"
-                        : "text-[#8190ad]"
-                    }`}
-                  >
-                    <span className="flex w-6 justify-center text-xl leading-none">
-                      {item.icon}
-                    </span>
 
-                    <span className="text-[15px] font-medium">
-                      {item.name}
-                    </span>
-                  </button>
-                ))}
+                {navigation.map((item) => {
+
+                  const active = isActive(item.href);
+
+                  return (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={`flex min-h-[56px] w-full items-center gap-4 rounded-xl px-5 text-left transition ${
+                        active
+                          ? "bg-[#17366d] text-[#65a4ff] shadow-[inset_4px_0_0_#4d8fff]"
+                          : "text-[#8190ad] hover:bg-white/[0.03] hover:text-white"
+                      }`}
+                    >
+
+                      <span className="flex w-6 justify-center text-xl leading-none">
+                        {item.icon}
+                      </span>
+
+                      <span className="text-[15px] font-medium">
+                        {item.name}
+                      </span>
+
+                    </Link>
+                  );
+                })}
+
               </div>
+
             </nav>
 
             {/* Drawer Footer */}
 
             <div className="mt-auto px-4 pb-6">
+
               <div className="rounded-xl border border-white/[0.06] bg-[#0e1623] p-5">
+
                 <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-[#8190ad]">
                   Create
                 </p>
@@ -257,10 +347,15 @@ export default function AppShell({ children }: AppShellProps) {
                   <br />
                   TOMORROW.
                 </p>
+
               </div>
+
             </div>
+
           </aside>
+
         </div>
+
       )}
 
       {/* ======================================================
@@ -270,6 +365,7 @@ export default function AppShell({ children }: AppShellProps) {
       <main className="relative z-0 min-h-screen lg:ml-[280px]">
         {children}
       </main>
+
     </div>
   );
 }
