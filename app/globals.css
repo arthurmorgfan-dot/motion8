@@ -1,26 +1,95 @@
 @import "tailwindcss";
 
+/* ============================================================
+   MOTION8 — Global Design System
+   ------------------------------------------------------------
+   RESPONSIBILITIES:
+   - Defines the visual foundation for the entire MOTION8 app.
+   - Controls global colors, typography, rendering, and spacing.
+   - Provides reusable design tokens through CSS variables.
+
+   DOES NOT CONTROL:
+   - Individual page layouts.
+   - AI generation logic.
+   - Pixel-art generation.
+   - Animation logic.
+   - API communication.
+   ============================================================ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --motion8-background: #080808;
+  --motion8-surface: #111111;
+  --motion8-surface-hover: #181818;
+  --motion8-border: #252525;
+
+  --motion8-text: #ffffff;
+  --motion8-text-muted: #8a8a8a;
+
+  --motion8-accent: #a855f7;
+  --motion8-accent-hover: #9333ea;
+
+  --motion8-radius: 14px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--motion8-background);
+  color: var(--motion8-text);
   font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* ============================================================
+   MOTION8 — Number Input
+   ------------------------------------------------------------
+   Removes the browser's default spinner arrows from
+   number inputs, including the Pixel Scale control.
+   ============================================================ */
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* ============================================================
+   MOTION8 — Mobile Touch Diagnostic
+   ------------------------------------------------------------
+   Temporarily forces interactive elements to receive pointer
+   and touch input. This is a diagnostic rule only.
+   ============================================================ */
+
+button,
+a,
+input,
+textarea,
+select {
+  pointer-events: auto !important;
+  touch-action: manipulation;
 }
